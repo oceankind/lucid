@@ -85,8 +85,10 @@ def render_vis(model, objective_f, param_f=None, optimizer=None,
     param_f snapshotted at specified thresholds. Usually that will mean one or
     multiple channel visualizations stacked on top of each other.
   """
+  config = tf.ConfigProto()
+  config.gpu_options.allow_growth=True
 
-  with tf.Graph().as_default() as graph, tf.Session() as sess:
+  with tf.Graph().as_default() as graph, tf.Session(config=config) as sess:
 
     if use_fixed_seed:  # does not mean results are reproducible, see Args doc
       tf.set_random_seed(0)
